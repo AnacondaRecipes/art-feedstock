@@ -1,0 +1,51 @@
+{% set name = "art" %}
+{% set version = "6.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a98d77b42c278697ec6cf4b5bdcdfd997f6b2425332da078d4e31e31377d1844
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  entry_points:
+    - art = art.__main__:main
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - art
+  commands:
+    - pip check
+    - art list
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sepandhaghighi/art
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: ASCII art library for Python
+  description: |
+    ART is a Python library for generating 2D ASCII art (both text-to-ASCII-art
+    fonts and a collection of non-text ASCII art shapes), usable as a library or
+    from the command line.
+  doc_url: https://www.ascii-art.site
+  dev_url: https://github.com/sepandhaghighi/art
+
+extra:
+  recipe-maintainers:
+    - xkong-anaconda
